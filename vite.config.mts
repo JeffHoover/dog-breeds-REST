@@ -13,10 +13,6 @@ export default defineConfig({
     },
   },
 
-  define: {
-    "process.env.REACT_APP_API_URL": JSON.stringify(""),
-  },
-
   test: {
     globals: true,
     environment: "jsdom",
