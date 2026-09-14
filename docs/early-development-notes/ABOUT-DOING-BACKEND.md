@@ -1,3 +1,5 @@
+__Historical development note__: _This document captures an earlier stage of the project and does not describe the current implementation. It is retained as a record of the project’s evolution. See the [main README](../../README.md) for the current architecture, behavior, and setup instructions._
+
 Your AI-dog-breeds repo currently simulates user sessions using localStorage and dummy tokens in the client (see src/services/simulated-auth.ts and simulated-api.ts). This is suitable for prototyping, but not for real persistent sessions.
 
 ### How it works now

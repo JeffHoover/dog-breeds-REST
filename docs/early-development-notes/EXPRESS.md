@@ -1,3 +1,5 @@
+__Historical development note__: _This document was an early plan for adding an Express backend. A backend was subsequently implemented, and these instructions may not match the current code. See the [main README](../../README.md) for current setup instructions._
+
 Here are complete instructions to add a real Express backend for persistent user sessions to your AI-dog-breeds repo:
 
 ---

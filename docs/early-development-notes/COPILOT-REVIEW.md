@@ -1,4 +1,7 @@
+__Historical development note__: _This document captures an earlier stage of the project and does not describe the current implementation. It is retained as a record of the project’s evolution. See the [main README](../../README.md) for the current architecture, behavior, and setup instructions._
+
 Here’s a code review of your repo **AI-dog-breeds**, focusing on non-canonical uses, risks, and missing features based on the available files and test coverage:
+
 
 ---
 
