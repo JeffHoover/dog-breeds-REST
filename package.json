@@ -23,7 +23,10 @@
     "build": "react-scripts build",
     "test": "react-scripts test --watchAll=false",
     "test-watch": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "dev:vite": "vite",
+    "build:vite": "vite build",
+    "preview:vite": "vite preview"
   },
   "eslintConfig": {
     "extends": [
