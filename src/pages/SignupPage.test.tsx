@@ -3,6 +3,11 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { vi } from "vitest";
 import SignupPage from "./SignupPage";
+import { signup } from "../services/api";
+
+vi.mock("../services/api", () => ({
+  signup: vi.fn(),
+}));
 
 beforeAll(() => {
   vi.spyOn(console, "warn").mockImplementation((msg) => {
@@ -31,8 +36,9 @@ describe("Signup Component", () => {
       screen.getByRole("button", { name: /sign up/i }),
     ).toBeInTheDocument();
   });
+  test("submits credentials and displays an error when signup fails", async () => {
+    vi.mocked(signup).mockResolvedValue({ success: false });
 
-  test("calls handleSubmit when form is submitted", () => {
     render(
       <MemoryRouter>
         <SignupPage />
@@ -51,6 +57,7 @@ describe("Signup Component", () => {
 
     fireEvent.click(screen.getByRole("button", { name: /sign up/i }));
 
-    expect(screen.getByLabelText(/email/i)).toHaveValue("test@example.com");
+    expect(signup).toHaveBeenCalledWith("test@example.com", "abc123");
+    expect(await screen.findByText(/signup failed/i)).toBeInTheDocument();
   });
 });

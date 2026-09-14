@@ -1,8 +1,13 @@
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { vi } from "vitest";
 import Login from "./Login";
+import { login } from "../../services/api";
+
+vi.mock("../../services/api", () => ({
+  login: vi.fn(),
+}));
 
 beforeAll(() => {
   vi.spyOn(console, "warn").mockImplementation((msg) => {
@@ -53,27 +58,31 @@ describe("Login Component", () => {
     expect(emailInput).toHaveValue("user@example.com");
     expect(passwordInput).toHaveValue("password123");
   });
+  test("logs in and notifies the parent on successful submission", async () => {
+    const onLogin = vi.fn();
 
-  test("calls handleSubmit on form submission", () => {
+    vi.mocked(login).mockResolvedValue({
+      token: "test-token",
+    });
+
     render(
       <MemoryRouter>
-        <Login
-          onLogin={function (): void {
-            throw new Error("Function not implemented.");
-          }}
-        />
+        <Login onLogin={onLogin} />
       </MemoryRouter>,
     );
 
-    const emailInput = screen.getByLabelText(/email/i);
-    const passwordInput = screen.getByLabelText(/password/i);
-    const button = screen.getByRole("button", { name: /log in/i });
+    fireEvent.change(screen.getByLabelText(/email/i), {
+      target: { value: "test@example.com" },
+    });
+    fireEvent.change(screen.getByLabelText(/password/i), {
+      target: { value: "secret" },
+    });
+    fireEvent.click(screen.getByRole("button", { name: /log in/i }));
 
-    fireEvent.change(emailInput, { target: { value: "test@example.com" } });
-    fireEvent.change(passwordInput, { target: { value: "secret" } });
-    fireEvent.click(button);
+    await waitFor(() => {
+      expect(onLogin).toHaveBeenCalledTimes(1);
+    });
 
-    // No real API call yet, so just ensure no crash and navigation logic runs
-    expect(emailInput).toHaveValue("test@example.com");
+    expect(localStorage.getItem("dog-breeds-app-token")).toBe("test-token");
   });
 });
