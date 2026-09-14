@@ -1,4 +1,4 @@
-import { defineConfig } from "vite";
+import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react-swc";
 
 export default defineConfig({
@@ -13,10 +13,14 @@ export default defineConfig({
     },
   },
 
-  // Temporary CRA compatibility bridge. We will replace this with
-  // import.meta.env when Vite becomes the sole build system.
   define: {
     "process.env.REACT_APP_API_URL": JSON.stringify(""),
+  },
+
+  test: {
+    globals: true,
+    environment: "jsdom",
+    setupFiles: "./src/setupTests.ts",
   },
 });
 

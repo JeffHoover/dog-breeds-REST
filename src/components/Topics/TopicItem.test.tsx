@@ -1,5 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
+import { vi } from "vitest";
 import TopicItem from "./TopicItem";
 
 describe("TopicItem Component", () => {
@@ -11,7 +12,7 @@ describe("TopicItem Component", () => {
   });
 
   test("calls onClick when clicked", () => {
-    const onClick = jest.fn();
+    const onClick = vi.fn();
     render(<TopicItem topic={topic} onClick={onClick} />);
 
     fireEvent.click(screen.getByText(topic.title));

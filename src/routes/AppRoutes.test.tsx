@@ -1,10 +1,11 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
+import { vi } from "vitest";
 import AppRoutes from "./AppRoutes";
 
 beforeAll(() => {
-  jest.spyOn(console, "warn").mockImplementation((msg) => {
+  vi.spyOn(console, "warn").mockImplementation((msg) => {
     if (
       typeof msg === "string" &&
       msg.includes("React Router Future Flag Warning")

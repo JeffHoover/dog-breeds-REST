@@ -1,5 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
+import { vi } from "vitest";
 import LoginPage from "./LoginPage";
 
 describe("LoginPage Component", () => {
@@ -11,7 +12,7 @@ describe("LoginPage Component", () => {
   });
 
   test("calls handleSubmit when form is submitted", () => {
-    const mockSubmit = jest.fn();
+    const mockSubmit = vi.fn();
     render(<LoginPage onSubmit={mockSubmit} />);
 
     fireEvent.change(screen.getByLabelText(/email/i), {

@@ -1,10 +1,15 @@
 import React from "react";
 import { render, screen, fireEvent, act } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
+import { vi } from "vitest";
 import Signup from "./Signup";
 
+vi.mock("../../services/api", () => ({
+  signup: vi.fn(),
+}));
+
 beforeAll(() => {
-  jest.spyOn(console, "warn").mockImplementation((msg) => {
+  vi.spyOn(console, "warn").mockImplementation((msg) => {
     if (
       typeof msg === "string" &&
       msg.includes("React Router Future Flag Warning")
@@ -52,7 +57,7 @@ describe("Signup Component", () => {
   });
 
   test("calls handleSubmit when form is submitted", () => {
-    const logSpy = jest.spyOn(console, "log").mockImplementation(() => {});
+    const logSpy = vi.spyOn(console, "log").mockImplementation(() => {});
 
     render(
       <MemoryRouter>

@@ -1,19 +1,20 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
+import { vi } from "vitest";
 import TopicList from "./TopicList";
 import { fetchTopics } from "../../services/api";
 
-jest.mock("../../services/api", () => ({
-  fetchTopics: jest.fn(),
+vi.mock("../../services/api", () => ({
+  fetchTopics: vi.fn(),
 }));
 
 describe("TopicList Component", () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
   beforeAll(() => {
-    jest.spyOn(console, "warn").mockImplementation((msg) => {
+    vi.spyOn(console, "warn").mockImplementation((msg) => {
       if (
         typeof msg === "string" &&
         msg.includes("React Router Future Flag Warning")
@@ -24,7 +25,7 @@ describe("TopicList Component", () => {
     });
   });
   test("renders loading state initially", () => {
-    (fetchTopics as jest.Mock).mockReturnValue(new Promise(() => {})); // never resolves
+    vi.mocked(fetchTopics).mockReturnValue(new Promise(() => {})); // never resolves
 
     render(
       <MemoryRouter>
@@ -42,7 +43,7 @@ describe("TopicList Component", () => {
       { id: "3", title: "Golden Retrievers" },
     ];
 
-    (fetchTopics as jest.Mock).mockResolvedValue(mockTopics);
+    vi.mocked(fetchTopics).mockResolvedValue(mockTopics);
 
     render(
       <MemoryRouter>
@@ -56,7 +57,7 @@ describe("TopicList Component", () => {
   });
 
   test("renders message when no topics exist", async () => {
-    (fetchTopics as jest.Mock).mockResolvedValue([]);
+    vi.mocked(fetchTopics).mockResolvedValue([]);
 
     render(
       <MemoryRouter>
@@ -68,7 +69,7 @@ describe("TopicList Component", () => {
   });
 
   test("renders error message on fetch failure", async () => {
-    (fetchTopics as jest.Mock).mockRejectedValue(new Error("API error"));
+    vi.mocked(fetchTopics).mockRejectedValue(new Error("API error"));
 
     render(
       <MemoryRouter>

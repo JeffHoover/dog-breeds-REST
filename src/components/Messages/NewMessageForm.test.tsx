@@ -1,5 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
+import { vi } from "vitest";
 import NewMessageForm from "./NewMessageForm"; // **no curly braces**
 
 describe("NewMessageForm Component", () => {
@@ -10,7 +11,7 @@ describe("NewMessageForm Component", () => {
   });
 
   test("calls onSubmit with input value when submitted", () => {
-    const mockSubmit = jest.fn();
+    const mockSubmit = vi.fn();
     render(<NewMessageForm onSubmit={mockSubmit} />);
 
     const input = screen.getByLabelText(/message/i);
@@ -23,7 +24,7 @@ describe("NewMessageForm Component", () => {
   });
 
   test("clears input after submit", () => {
-    const mockSubmit = jest.fn();
+    const mockSubmit = vi.fn();
     render(<NewMessageForm onSubmit={mockSubmit} />);
 
     const input = screen.getByLabelText(/message/i);

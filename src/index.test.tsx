@@ -1,17 +1,15 @@
-/**
- * @jest-environment jsdom
- */
-import React from "react";
-import ReactDOM from "react-dom/client";
+import { render } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
 import App from "./App";
 
-describe("index.tsx", () => {
-  beforeEach(() => {
-    document.body.innerHTML = '<div id="root"></div>';
-  });
-
+describe("application entry component", () => {
   test("renders App without crashing", () => {
-    const root = ReactDOM.createRoot(document.getElementById("root")!);
-    expect(() => root.render(<App />)).not.toThrow();
+    expect(() =>
+      render(
+        <MemoryRouter>
+          <App />
+        </MemoryRouter>,
+      ),
+    ).not.toThrow();
   });
 });
